@@ -4,7 +4,7 @@
   "description": "server to load movies",
   "main": "movie-api.js",
   "scripts": {
-    "start": "node movie-api.js",
+    "start": "npm install && node movie-api.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
