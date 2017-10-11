@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/moviedb', {useMongoClient: true});
+//mongoose.connect('mongodb://localhost/moviedb', {useMongoClient: true});
+mongoose.connect('mongodb://mongobreeze:applewater915@ds115085.mlab.com:15085/movie_db', {useMongoClient: true});
 var db = mongoose.connection;
 db.on('error', console.error);
 db.once('open', function() {
