@@ -2,7 +2,9 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 //mongoose.connect('mongodb://localhost/moviedb', {useMongoClient: true});
-mongoose.connect('mongodb://mongobreeze:applewater915@ds115085.mlab.com:15085/movie_db', {useMongoClient: true});
+//mongoose.connect('mongodb://mongobreeze:applewater915@ds115085.mlab.com:15085/movie_db', {useMongoClient: true});
+mongoose.connect('mongodb://localhost/moviedb', {useMongoClient: true});
+
 var db = mongoose.connection;
 db.on('error', console.error);
 db.once('open', function() {
@@ -58,25 +60,27 @@ db.once('open', function() {
 	});
 
 	//Update Movie
-	router.put('/movie/:id', function(req, res, next){
+	router.put('/movie/:id', function(req, res){
 	    var newMovie = req.body;
-	    var updMovie = {};
-	    updMovie.title = newMovie.title;
+		var updMovie = {};
+		console.dir("new mov " + newMovie);
+	    updMovie.name = newMovie.title;
 	    updMovie.description = newMovie.description;
 	    updMovie.imgPath = newMovie.imgPath;
-	    updMovie.genre = newMovie.genre;
+	    //updMovie.genre = newMovie.genre;
 	    updMovie.language = newMovie.language;
-	    updMovie.mpaaRating = newMovie.mpaaRating;
-	    updMovie.userRating = newMovie.userRating;
-
-	    if(!movie.title || !movie.duration){
+	    //updMovie.mpaaRating = newMovie.mpaaRating;
+	    updMovie.userRating = newMovie.userrating;
+		console.dir(updMovie.name + " | " + updMovie.userRating);
+		
+	    if(!updMovie.name){
 	        res.status(400);
 	        res.json({
 	            "error": "Bad Data"
 	        });
 	    } else {
 	    	var the_id = mongoose.Types.ObjectId(req.params.id);
-	        Movie.findByIdAndUpdate({_id: the_id}, updMovie, function(err, movie) {
+	        Movie.findByIdAndUpdate({_id: the_id}, {$set: updMovie}, function(err, movie) {
 	        	if(err){
 	            	res.send(err);
 	        	}
